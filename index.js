@@ -2,14 +2,14 @@
 const { EOL } = require("os");
 
 // Require Third-party Dependencies
-const { green, white, cyan, yellow, gray, bold, red } = require("kleur");
+const { green, white, cyan, yellow, gray, bold } = require("kleur");
 
 function primeColor(primitive) {
     switch (typeof primitive) {
         case "object": return gray;
         case "number": return cyan;
-        case "boolean": return red;
-        case "string": return yellow;
+        case "boolean": return yellow;
+        case "string": return green;
         default: return white;
     }
 }
@@ -47,7 +47,9 @@ function logArray(arr, depth = 1) {
         if (returnLine && id !== 0) {
             process.stdout.write(startSpace);
         }
-        process.stdout.write(primeColor(value)(String(value)));
+
+        const color = primeColor(value);
+        process.stdout.write(color(tValue === "string" ? `'${value}'` : String(value)));
         if (id !== lenMax) {
             process.stdout.write(gray(", "));
             if (returnLine) {
@@ -73,7 +75,7 @@ function logObject(obj, depth = 1) {
         }
         const startSpace = depth === 1 ? " " : "  ".repeat(depth);
 
-        process.stdout.write(bold(green(`${startSpace}${key}: ${" ".repeat(betweenSpace - key.length)}`)));
+        process.stdout.write(bold(white(`${startSpace}${key}: ${" ".repeat(betweenSpace - key.length)}`)));
         if (tValue === "object" && value !== null) {
             if (Array.isArray(value)) {
                 logArray(value, depth + 1);
@@ -85,7 +87,8 @@ function logObject(obj, depth = 1) {
             continue;
         }
         else {
-            process.stdout.write(primeColor(value)(String(value)));
+            const color = primeColor(value);
+            process.stdout.write(color(tValue === "string" ? `'${value}'` : String(value)));
         }
         if (id !== entries.length - 1) {
             process.stdout.write(EOL);
