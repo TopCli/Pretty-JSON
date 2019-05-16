@@ -1,6 +1,7 @@
 declare namespace PrettyJSON {
-    export function stdoutJSON(obj: object): void;
 }
+
+function PrettyJSON(obj: object): void;
 
 export as namespace PrettyJSON;
 export = PrettyJSON;
