@@ -15,7 +15,14 @@
         "type": "git",
         "url": "git+https://github.com/SlimIO/Pretty-JSON.git"
     },
-    "keywords": [],
+    "keywords": [
+        "pretty",
+        "json",
+        "beautiful",
+        "format",
+        "stdout",
+        "terminal"
+    ],
     "author": "SlimIO",
     "license": "MIT",
     "bugs": {
