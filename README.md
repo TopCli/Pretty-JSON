@@ -38,5 +38,11 @@ It will produce the following stdout:
 ### prettyJSON(obj: object): void
 Stdout a given JSON Object (Plain Object, Objects Prototype of Object or Array).
 
+## Dependencies
+
+|Name|Refactoring|Security Risk|Usage|
+|---|---|---|---|
+|[kleur](https://github.com/lukeed/kleur#readme)|Minor|Low|CLI color|
+
 ## License
 MIT
