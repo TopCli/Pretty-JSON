@@ -16,3 +16,5 @@ commitlint.config.js
 CHANGELOG.md
 .travis.yml
 .env
+.eslintignore
+.snyk
