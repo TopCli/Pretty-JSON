@@ -6,6 +6,11 @@ const { EOL } = require("os");
 // Require Third-party Dependencies
 const { green, white, cyan, yellow, gray, bold } = require("kleur");
 
+/**
+ * @function primeColor
+ * @param {*} primitive a primitive value
+ * @returns {Kleur.color}
+ */
 function primeColor(primitive) {
     switch (typeof primitive) {
         case "object": return gray;
@@ -16,6 +21,12 @@ function primeColor(primitive) {
     }
 }
 
+/**
+ * @function logArray
+ * @param {!Array<any>} arr
+ * @param {number} [depth=1]
+ * @returns {void}
+ */
 function logArray(arr, depth = 1) {
     const backStart = depth === 2 ? " " : "  ".repeat(depth - 1);
     const startSpace = depth === 1 ? " " : "  ".repeat(depth);
@@ -62,6 +73,12 @@ function logArray(arr, depth = 1) {
     process.stdout.write(`${EOL}${backStart}${gray("]")}`);
 }
 
+/**
+ * @function logObject
+ * @param {!object} obj
+ * @param {number} [depth=1]
+ * @returns {void}
+ */
 function logObject(obj, depth = 1) {
     // eslint-disable-next-line
     const betweenSpace = Object.keys(obj).reduce((prev, curr) => {
