@@ -21,39 +21,39 @@ function logArray(arr, depth = 1) {
     const startSpace = depth === 1 ? " " : "  ".repeat(depth);
     const lenMax = arr.length - 1;
     const returnLine = arr.length > 10;
+    const firstIsObject = arr.length > 0 && is.plainObject(arr[0]);
 
-    process.stdout.write(`${gray("[")}${EOL}${startSpace}`);
+    process.stdout.write(`${gray("[")}${EOL}${firstIsObject ? "" : startSpace}`);
     for (let id = 0; id < arr.length; id++) {
         const value = arr[id];
-        if (is.object(value)) {
-            if (Array.isArray(value)) {
-                if (id !== 0) {
-                    process.stdout.write(startSpace);
-                }
-                logArray(value, depth + 1);
-                if (id !== lenMax) {
-                    process.stdout.write(gray(", "));
-                    process.stdout.write(EOL);
-                }
-            }
-            else {
-                logObject(value, depth);
-                if (id !== lenMax) {
-                    process.stdout.write(EOL);
-                }
-            }
-            continue;
-        }
 
-        if (returnLine && id !== 0) {
-            process.stdout.write(startSpace);
-        }
-
-        process.stdout.write(primeColor(value)(is.string(value) ? `'${value}'` : String(value)));
-        if (id !== lenMax) {
-            process.stdout.write(gray(", "));
-            if (returnLine) {
+        if (is.array(value)) {
+            if (id !== 0) {
+                process.stdout.write(startSpace);
+            }
+            logArray(value, depth + 1);
+            if (id !== lenMax) {
+                process.stdout.write(gray(", "));
                 process.stdout.write(EOL);
+            }
+        }
+        else if (is.plainObject(value)) {
+            logObject(value, depth);
+            if (id !== lenMax) {
+                process.stdout.write(EOL);
+            }
+        }
+        else {
+            if (returnLine && id !== 0) {
+                process.stdout.write(startSpace);
+            }
+
+            process.stdout.write(primeColor(value)(is.string(value) ? `'${value}'` : String(value)));
+            if (id !== lenMax) {
+                process.stdout.write(gray(", "));
+                if (returnLine) {
+                    process.stdout.write(EOL);
+                }
             }
         }
     }
