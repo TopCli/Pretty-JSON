@@ -6,7 +6,7 @@
 Stdout JSON in your terminal with colors. This package has been created to stdout clean and beautiful JSON in the SlimIO CLI.
 
 ## Requirements
-- Node.js v10 or higher
+- [Node.js](https://nodejs.org/en/) v10 or higher
 
 ## Getting Started
 
@@ -42,7 +42,8 @@ Stdout a given JSON Object (Plain Object, Objects Prototype of Object or Array).
 
 |Name|Refactoring|Security Risk|Usage|
 |---|---|---|---|
-|[kleur](https://github.com/lukeed/kleur#readme)|Minor|Low|CLI color|
+|[@slimio/is](https://github.com/SlimIO/is)|Minor|Low|Type checker|
+|[kleur](https://github.com/lukeed/kleur)|Minor|Low|TTY color|
 
 ## License
 MIT
