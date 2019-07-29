@@ -7,9 +7,7 @@
         "start": "node index.js",
         "prepublishOnly": "pkg-ok",
         "test": "cross-env psp && jest --coverage",
-        "doc": "jsdoc -c ./jsdoc.json -r -R ./README.md -P ./package.json --verbose",
-        "coverage": "nyc npm test",
-        "report": "nyc report --reporter=html"
+        "doc": "jsdoc -c ./jsdoc.json -r -R ./README.md -P ./package.json --verbose"
     },
     "repository": {
         "type": "git",
@@ -45,7 +43,6 @@
         "husky": "^3.0.1",
         "jest": "^24.8.0",
         "jsdoc": "^3.6.3",
-        "nyc": "^14.1.1",
         "pkg-ok": "^2.3.1"
     },
     "engines": {
@@ -56,13 +53,5 @@
             "pre-push": "cross-env eslint index.js && npm test",
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
-    },
-    "nyc": {
-        "check-coverage": true,
-        "per-file": false,
-        "lines": 98,
-        "statements": 98,
-        "functions": 98,
-        "branches": 90
     }
 }
