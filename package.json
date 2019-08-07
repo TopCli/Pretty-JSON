@@ -21,6 +21,11 @@
         "stdout",
         "terminal"
     ],
+    "files": [
+        "index.js",
+        "index.d.ts",
+        "src/utils.js"
+    ],
     "author": "SlimIO",
     "license": "MIT",
     "bugs": {
