@@ -3,6 +3,7 @@
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/SlimIO/Pretty-JSON/commit-activity)
 ![MIT](https://img.shields.io/github/license/mashape/apistatus.svg)
 ![dep](https://img.shields.io/david/SlimIO/Pretty-JSON)
+![size](https://img.shields.io/bundlephobia/min/@slimio/pretty-json)
 [![Known Vulnerabilities](https://snyk.io//test/github/SlimIO/Pretty-JSON/badge.svg?targetFile=package.json)](https://snyk.io//test/github/SlimIO/Pretty-JSON?targetFile=package.json)
 
 Stdout JSON in your terminal with colors. This package has been created to stdout clean and beautiful JSON in the SlimIO CLI.
