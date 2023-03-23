@@ -1,33 +1,60 @@
 // Require Node.js Dependencies
-const { spawn } = require("child_process");
-const { join } = require("path");
+import { spawn } from "node:child_process";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { describe, it } from "node:test";
+import { strictEqual, throws } from "node:assert";
 
 // Require Third-party Dependencies
-const is = require("@slimio/is");
+import is from "@slimio/is";
 
 // Require Internal Dependencies
-const prettyJSON = require("../");
+import prettyJSON  from "../index.js";
+
+// CONSTANTS
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 async function executeNodeScript(path) {
-    const { stdout } = spawn(process.argv[0], [path]);
-    let str = "";
-    for await (const buf of stdout) {
-        str += buf;
-    }
+  const { stdout } = spawn(process.argv[0], [path]);
+  let str = "";
+  for await (const buf of stdout) {
+    str += buf;
+  }
 
-    str | 0;
-    return str;
+  // eslint-disable-next-line no-unused-expressions
+  str | 0;
+
+  return str;
 }
 
-test("prettyJSON must be a function", () => {
-    expect(is.func(prettyJSON)).toStrictEqual(true);
-});
+describe("getLocalLang/setLocalLang", () => {
+  it("prettyJSON must be a function", () => {
+    strictEqual(is.func(prettyJSON), true);
+  });
 
-test("prettyJSON of non-object must return undefined", () => {
-    expect(prettyJSON("hello")).toStrictEqual(undefined);
-});
+  it("prettyJSON : should generate an error", () => {
+    const expectedValue = "hello";
+    throws(() => {
+      prettyJSON(expectedValue),
+      {
+        name: "Error",
+        message: `Payload -> ${expectedValue} should be object or array`
+      }
+    })
+  });
 
-test("prettyJSON stdout must be the same", async() => {
+  it("prettyJSON stdout must be the same", async() => {
+    const expectedValue = [
+      "",
+      " foo:   'bar'",
+      " hello: 'world'",
+      " arr:   [",
+      "    1, 2, 3",
+      " ]",
+      "",
+      "",
+    ]
     const stdout = await executeNodeScript(join(__dirname, "fixtures", "01.js"));
-    expect(stdout).toMatchSnapshot();
+    strictEqual(stdout, expectedValue.join('\n'));
+  });
 });

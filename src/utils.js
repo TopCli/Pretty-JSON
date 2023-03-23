@@ -1,7 +1,5 @@
-"use strict";
-
 // Require Third-party Dependencies
-const { green, white, cyan, yellow, gray } = require("kleur");
+import kleur from "kleur";
 
 /**
  * @namespace Utils
@@ -16,10 +14,7 @@ const { green, white, cyan, yellow, gray } = require("kleur");
  * @returns {number}
  */
 function maxKeyLength(obj, defaultLength = 4) {
-    // eslint-disable-next-line
-    return Object.keys(obj).reduce((prev, curr) => {
-        return curr.length > prev ? curr.length : prev;
-    }, defaultLength);
+  return Object.keys(obj).reduce((prev, curr) => (curr.length > prev ? curr.length : prev), defaultLength);
 }
 
 /**
@@ -29,13 +24,13 @@ function maxKeyLength(obj, defaultLength = 4) {
  * @returns {Kleur.color}
  */
 function primeColor(primitive) {
-    switch (typeof primitive) {
-        case "object": return gray;
-        case "number": return cyan;
-        case "boolean": return yellow;
-        case "string": return green;
-        default: return white;
-    }
+  switch (typeof primitive) {
+    case "object": return kleur.gray;
+    case "number": return kleur.cyan;
+    case "boolean": return kleur.yellow;
+    case "string": return kleur.green;
+    default: return kleur.white;
+  }
 }
 
-module.exports = { maxKeyLength, primeColor };
+export { maxKeyLength, primeColor };

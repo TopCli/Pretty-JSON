@@ -1,5 +1,5 @@
 // Require Internal Dependencies
-const prettyJSON = require("../../");
+import prettyJSON from "../../index.js";
 
 prettyJSON({
     foo: "bar",
