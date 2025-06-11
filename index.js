@@ -1,120 +1,129 @@
-// Require Third-party Dependencies
-import kleur from "kleur";
-import is from "@slimio/is";
+// Import Node.js Dependencies
+import { EOL } from "node:os";
+import { styleText } from "node:util";
 
+// Import Internal Dependencies
+import * as utils from "./src/utils.js";
 
-// Require Internal Dependencies
-import { maxKeyLength, primeColor } from "./src/utils.js";
+function logArray(arr, options = {}) {
+  const {
+    depth = 1,
+    disableEndLine = false
+  } = options;
 
-// CONSTANTS
-const EOL = "\n";
-
-/**
- * @function logArray
- * @param {!Array<any>} arr
- * @param {number} [depth=1]
- * @param {boolean} [disableEndLine=false]
- * @returns {void}
- */
-function logArray(arr, depth = 1, disableEndLine = false) {
   const backStart = depth === 2 ? " " : "  ".repeat(depth - 1);
   const startSpace = depth === 1 ? " " : "  ".repeat(depth);
   const lenMax = arr.length - 1;
-  const returnLine = arr.length > 10;
-  const firstIsObject = arr.length > 0 && is.plainObject(arr[0]);
+  const returnLine = utils.shouldArrayReturnLine(arr, { depth });
+  const firstIsObject = arr.length > 0 && utils.isPlainObject(arr[0]);
   let forceNext = false;
 
   if (arr.length === 0) {
-    process.stdout.write(`${kleur.gray("[]")}${disableEndLine ? "" : EOL}`);
+    process.stdout.write(`${styleText("gray", "[]")}${disableEndLine ? "" : EOL}`);
 
     return;
   }
 
-  process.stdout.write(`${kleur.gray("[")}${EOL}${firstIsObject ? "" : startSpace}`);
+  if (depth === 1) {
+    process.stdout.write(EOL);
+  }
+
+  const shouldReturn = utils.isPlainObject(arr[0]) === false;
+  process.stdout.write(`${styleText("gray", "[")}${shouldReturn ? EOL : ""}${firstIsObject ? "" : startSpace}`);
   for (let id = 0; id < arr.length; id++) {
     const value = arr[id];
 
-    if (is.array(value)) {
+    if (Array.isArray(value)) {
       if (id !== 0) {
         process.stdout.write(startSpace);
       }
-      logArray(value, depth + 1, true);
+      logArray(value, { depth: depth + 1, disableEndLine: true });
       forceNext = true;
       if (id !== lenMax) {
-        process.stdout.write(kleur.gray(", "));
+        process.stdout.write(styleText("gray", ", "));
         process.stdout.write(EOL);
       }
     }
-    else if (is.plainObject(value)) {
-      logObject(value, depth, true);
+    else if (utils.isPlainObject(value)) {
+      logObject(value, {
+        depth,
+        disableEndLine: utils.shouldObjectReturnLine(value, { depth }),
+        inArray: true
+      });
       forceNext = true;
     }
     else {
-      // eslint-disable-next-line
-            if ((returnLine && id > 0) || forceNext) {
+      if ((returnLine && id > 0) || forceNext) {
         process.stdout.write(startSpace);
         forceNext = false;
       }
 
-      process.stdout.write(primeColor(value)(is.string(value) ? `'${value}'` : String(value)));
+      const isString = typeof value === "string";
+      process.stdout.write(utils.primeColor(value)(isString ? `'${value}'` : String(value)));
       if (id !== lenMax) {
-        process.stdout.write(kleur.gray(", "));
+        process.stdout.write(styleText("gray", ", "));
         if (returnLine) {
           process.stdout.write(EOL);
         }
       }
     }
   }
-  process.stdout.write(`${EOL}${backStart}${kleur.gray("]")}${disableEndLine ? "" : EOL}`);
+  process.stdout.write(`${EOL}${backStart}${styleText("gray", "]")}${disableEndLine ? "" : EOL}`);
 }
 
-/**
- * @function logObject
- * @param {!object} obj
- * @param {number} [depth=1]
- * @param {boolean} [disableEndLine=false]
- * @returns {void}
- */
-function logObject(obj, depth = 1, disableEndLine = false) {
-  const betweenSpace = maxKeyLength(obj, 4);
+function logObject(obj, options = {}) {
+  const {
+    depth = 1,
+    disableEndLine = false,
+    inArray = false
+  } = options;
+  const betweenSpace = utils.maxKeyLength(obj, 4);
   const startSpace = depth === 1 ? " " : "  ".repeat(depth);
   const entries = Object.entries(obj);
 
   if (entries.length === 0) {
-    process.stdout.write(`${kleur.gray("{}")}${disableEndLine ? "" : EOL}`);
+    process.stdout.write(`${styleText("gray", "{}")}${disableEndLine ? "" : EOL}`);
 
     return;
   }
 
   for (let id = 0; id < entries.length; id++) {
     const [key, value] = entries[id];
-    if (is.func(value) || is.symbol(value)) {
+    if (["function", "symbol"].includes(typeof value)) {
       continue;
     }
 
     if (id === 0) {
       process.stdout.write(EOL);
     }
-    process.stdout.write(kleur.bold(kleur.white(`${startSpace}${key}: ${" ".repeat(betweenSpace - key.length)}`)));
-    if (is.object(value)) {
-      (Array.isArray(value) ? logArray : logObject)(value, depth + 1);
+    process.stdout.write(styleText(["bold", "white"], `${startSpace}${key}: ${" ".repeat(betweenSpace - key.length)}`));
+    if (utils.isPlainObject(value)) {
+      logObject(value, { depth: depth + 1 });
+      continue;
+    }
+    if (Array.isArray(value)) {
+      logArray(value, { depth: depth + 1 });
       continue;
     }
 
-    process.stdout.write(primeColor(value)(is.string(value) ? `'${value}'` : String(value)));
-    if (!disableEndLine) {
+    process.stdout.write(utils.primeColor(value)(typeof value === "string" ? `'${value}'` : String(value)));
+    if (!disableEndLine && !(inArray && id === entries.length - 1)) {
       process.stdout.write(EOL);
     }
   }
 }
 
 export default function stdoutJSON(obj) {
-  if (is.object(obj)) {
-    (Array.isArray(obj) ? logArray : logObject)(obj);
-    process.stdout.write(EOL);
+  if (utils.isPlainObject(obj)) {
+    logObject(obj);
+  }
+  else if (Array.isArray(obj)) {
+    logArray(obj);
   }
   else {
     throw new Error(`${obj} should be object or array.`);
   }
+
+  process.stdout.write(EOL);
 }
 
