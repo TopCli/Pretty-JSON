@@ -1,3 +1,3 @@
 declare function PrettyJSON(obj: object): void;
 
-export = PrettyJSON;
+export default PrettyJSON;
