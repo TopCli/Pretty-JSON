@@ -1,6 +1,6 @@
 {
   "name": "@topcli/pretty-json",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Stdout JSON in your terminal",
   "main": "./index.js",
   "type": "module",
