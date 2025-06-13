@@ -5,10 +5,10 @@
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/TopCli/Pretty-JSON/badge?style=for-the-badge)](https://api.securityscorecards.dev/projects/github.com/TopCli/Pretty-JSON)
 ![build](https://img.shields.io/github/actions/workflow/status/TopCli/Pretty-JSON/node.js.yml?style=for-the-badge)
 
-Stdout JSON in your terminal with colors. This package has been created to stdout clean and beautiful JSON in the  SlimIO CLI.
+Pretty-print JSON to the terminal with syntax highlighting and structure-aware formatting.
 
 ## Requirements
-- [Node.js](https://nodejs.org/en/) v16 or higher
+- [Node.js](https://nodejs.org/en/) v20 or higher
 
 ## Getting Started
 
@@ -25,9 +25,9 @@ $ yarn add @topcli/pretty-json
 import prettyJSON from "@topcli/pretty-json";
 
 prettyJSON({
-    foo: "bar",
-    hello: "world!",
-    arr: [1, 2, 3]
+  foo: "bar",
+  hello: "world!",
+  arr: [1, 2, 3]
 });
 ```
 
@@ -38,14 +38,13 @@ It will produce the following stdout:
 ## API
 
 ### prettyJSON(obj: object): void
-Stdout a given JSON Object (Plain Object, Objects Prototype of Object or Array).
 
-## Dependencies
+Prints a JSON-compatible object or array to the terminal with syntax highlighting and structured indentation.
 
-|Name|Refactoring|Security Risk|Usage|
-|---|---|---|---|
-|[@slimio/is](https://github.com/SlimIO/is)|Minor|Low|Type checker|
-|[kleur](https://github.com/lukeed/kleur)|Minor|Low|TTY color|
+- Supports plain objects, arrays, and nested structures.
+- Skips functions and symbols.
+- Color-codes data types (strings, numbers, booleans, etc.).
+- Outputs readable, formatted JSON — ideal for CLI inspection.
 
 ## License
 MIT

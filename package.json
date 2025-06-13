@@ -1,52 +1,42 @@
 {
-    "name": "@topcli/pretty-json",
-    "version": "1.3.0",
-    "description": "Stdout JSON in your terminal",
-    "main": "./index.js",
-    "type": "module",
-     "scripts": {
-        "start": "node index.js",
-        "lint": "eslint .",
-        "prepublishOnly": "pkg-ok",
-        "test": "node --test test/test.js",
-        "coverage": "codecov",
-        "doc": "jsdoc -c ./jsdoc.json -r -R ./README.md -P ./package.json --verbose"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/TopCli/Pretty-JSON.git"
-    },
-    "keywords": [
-        "pretty",
-        "json",
-        "beautiful",
-        "format",
-        "stdout",
-        "terminal"
-    ],
-    "files": [
-        "index.js",
-        "index.d.ts",
-        "src/utils.js"
-    ],
-    "author": "GENTILHOMME Thomas <gentilhomme.thomas@gmail.com>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/TopCli/Pretty-JSON/issues"
-    },
-    "homepage": "https://github.com/TopCli/Pretty-JSON#readme",
-    "dependencies": {
-        "@slimio/is": "^2.0.0",
-        "kleur": "^4.1.5"
-    },
-    "devDependencies": {
-        "@escommunity/minami": "^1.0.0",
-        "@nodesecure/eslint-config": "^1.7.0",
-        "codecov": "^3.7.0",
-        "eslint": "^8.32.0",
-        "jsdoc": "^4.0.2"
-    },
-    "engines": {
-        "node": ">=16"
-    }
+  "name": "@topcli/pretty-json",
+  "version": "1.0.0",
+  "description": "Stdout JSON in your terminal",
+  "main": "./index.js",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "node --test test/**/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TopCli/Pretty-JSON.git"
+  },
+  "keywords": [
+    "pretty",
+    "json",
+    "beautiful",
+    "format",
+    "stdout",
+    "print",
+    "cli",
+    "terminal"
+  ],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "src/utils.js"
+  ],
+  "author": "GENTILHOMME Thomas <gentilhomme.thomas@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TopCli/Pretty-JSON/issues"
+  },
+  "homepage": "https://github.com/TopCli/Pretty-JSON#readme",
+  "devDependencies": {
+    "@openally/config.eslint": "^2.2.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }
