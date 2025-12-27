@@ -8,6 +8,11 @@
     "lint": "eslint .",
     "test": "node --test test/**/*.spec.js"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public",
+    "provenance": true
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TopCli/Pretty-JSON.git"
